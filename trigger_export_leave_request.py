@@ -41,18 +41,24 @@ def export_leave_request():
         year = dag_conf["year"]
         sql = f"""
                 SELECT 
-                    user_id,
+                    d.user_id,
+                    employee_code AS employee_code,
+                    psi.department AS department,
                     concat( ru.firstname, ' ', ru.lastname )  AS fullname,
                     lt.name as leave_type,
-                    approved ,hours_per_day as number_of_days,
+                    approved, hours_per_day as number_of_days,
                     notes,
                     start_date as start_date_off,
-                    end_date as end_date_off
+                    end_date as end_date_off,
+                    created_at::varchar as created_at,
+                    updated_at::varchar as updated_at
                 FROM dayoffs d
                     inner join users ru on d.user_id=ru.id
                     inner join leave_types lt on d.leave_type_id=lt.id
+                    inner join pmax_staff_info psi on psi.user_id = ru.id
                 WHERE
                     EXTRACT(YEAR FROM d.start_date) = {year} and EXTRACT(MONTH FROM d.start_date) = {month}
+                ORDER BY created_at
                 """
         with psycopg2.connect(**db_settings) as conn:
             logger.info(f'Executing query: {sql}')
