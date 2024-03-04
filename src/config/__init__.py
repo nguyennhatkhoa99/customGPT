@@ -15,7 +15,7 @@ class Config(object):
     TESTING = os.getenv("TESTING") or False
     SECRET_KEY = os.getenv('SECRET_KEY') 
     CUSTOM_GPT_PROJECT_ID = os.getenv('CUSTOMGPT_PROJECT_ID') or '20803'
-    API_KEY_PATH = os.getenv('API_KEY_PATH') or '/home/customgpt/customGPT/keys/kms-chatbot-f6b2c92cc678.json'
+    API_KEY_PATH = os.getenv('API_KEY_PATH') or '/home/customgpt/customGPT/keys/kms-chatbot-8ca25b5180aa.json'
 
 class ProductionConfig(Config):
     DEBUG = False
