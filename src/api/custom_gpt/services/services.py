@@ -25,9 +25,9 @@ def upload_file_to_customgpt(file_name, file_path):
         with open(file_path, 'rb') as input_file:
             files = {'file': input_file}
             upload_file_url = f'{constants.CUSTOM_GPT_URL}{Config.CUSTOM_GPT_PROJECT_ID}/sources'
-            responses = requests.post(url=upload_file_url,headers=headers,files=files, json=body)
-            print(responses.json())
-            if responses.status_code == 200:
+            responses = requests.post(url=upload_file_url,headers=headers,files=files, json=body).json()
+            print(responses)
+            if responses['status'] == 'success':
                 return {
                     'status': 200,
                     'message': 'Upload successfull'
