@@ -15,7 +15,11 @@ class CustomGPTAPI(Resource):
             body = request.json
             saved_file_path = os.path.join(os.path.join(os.getcwd(), TMP_FOLDER), body['name'])
             result = upload_file_to_customgpt(body['name'], saved_file_path)
-            print(result)
+            return {
+                "data": result.__dict__,
+                "status": 200,
+                "message": "Upload File successful"
+            }
         except Exception as error:
             return {
                 "data": None,
